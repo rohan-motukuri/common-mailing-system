@@ -1,4 +1,4 @@
-import { useState, use } from "react";
+import { useState, useEffect } from "react";
 import { auth, provider } from "./Components/Firebase"
 import Axios from "axios";
 
