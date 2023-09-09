@@ -1,0 +1,25 @@
+# Common Mailing Interface
+
+# Problem Statement
+
+Shared mails for purpouses such as lecture note sharing for a class would result in various concerns such as -
+1. Leaked locations.
+2. Misused conduct of the privilages by a few bad actors.
+(For example some anonoymous bad actor rejected my access thanks to 2-Step Verification when I tried to access from a new device)
+![image](https://github.com/rohan-motukuri/common-mailing-system/assets/123802857/7ef30c03-7f48-4bc2-a800-ea5c25a19730)
+
+# Exploring Solutions
+
+| S_No | Approach                                                                                             | Benefits        | Demerits                                                                                                                                                                                                                 |
+| ---- | ---------------------------------------------------------------------------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1    | Setup an Auto Forwarding system using [POP/IMAP](https://support.google.com/mail/answer/10957?hl=en) | In-Built method & Familiar end-user experience | Forwardable to only one address, Isn't ideal in the case of a shared mail with multiple users (addresses)                                                                                                               |
+| 2    | Setup a Common Group on a Messenger Service (Like WhatsApp or Telegram)                              | Familiar Experience     | In many a cases, a need for common mail arises due to professional requirements or due to the ease & capabilities of data organization in email services; Which, as of now, are not replicable on a messaging service. |
+
+# Solution 
+
+So to bridge the merits of each solution discussed, I came up with a Common Mailing Interface solution.
+
+| Merits                      | Demerits         | Potential Extensions                           |
+| --------------------------- | ---------------- | ---------------------------------------------- |
+| Simpler End-User Experience | Complex Approach | Auto Forwarding, Messenger Service Integration | 
+

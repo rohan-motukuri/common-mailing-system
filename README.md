@@ -1,2 +1,0 @@
-# Commmon Mialing System
-
