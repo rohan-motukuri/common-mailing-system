@@ -7,10 +7,10 @@ const App = () => {
   const [subscriberStatusChecked, setSubscriberStatusChecked] = useState(false);
 
   const getSubscriberStatus = () => {
-    Axios.get("http://localhost:5000/UserCheck")
+    Axios.get("http://localhost:5000/UserCheck:rohan@gmail.com")
       .then((response) => {
         console.log(response);
-        alert("Hiii, Just did this");
+        alert("The response was : " + response);
       })
       .catch((err) => {
         console.log(err);
