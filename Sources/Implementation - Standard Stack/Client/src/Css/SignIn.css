@@ -1,0 +1,62 @@
+.signin_background_card {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: rgb(255, 255, 255);
+    border-radius: 2%;
+    box-shadow: 0px 1.78px 8px hwb(0 86% 13% / 0.51);
+    border: none;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.signin_logo {
+    width: 90%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.signin_enter .button {
+    margin-bottom: 30px;
+    padding: 20px 40px;
+    border-radius: 10px;
+    border: 0.5px solid rgba(128, 128, 128, 0.368);
+
+    cursor: pointer;
+
+    color: #2171f2;
+    background-color: white;
+
+    transition-duration: 0.4s;
+}
+
+    .signin_enter .button:hover {
+        color: #174ea6;
+        background-color: #f6f9fe;
+        cursor: pointer;
+
+        border: 1px solid #2171f2;
+    }
+
+.signin_login_text {
+    font-family: 'Raleway Dots', cursive;
+
+    font-size: 15px;
+    font-weight: 700;
+    color: black;
+    
+}
+
+@media screen and (max-width : 400px) {
+
+}

@@ -1,36 +1,44 @@
 import { useState, useEffect } from "react";
-import { auth, provider } from "./Components/Firebase"
-import Axios from "axios";
+import React from "react";
+
+import Home from "./Components/Home";
+
+const SignIn = React.lazy(() => import("./Components/SignIn"));
+// const Home = React.lazy(() => import("./Components/Home"));
 
 const App = () => {
-  const [user, setUser] = useState(null);
-  const [subscriberStatusChecked, setSubscriberStatusChecked] = useState(false);
+  const [subscriber, setSubscriber] = useState(null);
 
-  const getSubscriberStatus = () => {
-    Axios.get("http://localhost:5000/UserCheck:rohan@gmail.com")
-      .then((response) => {
-        console.log(response);
-        alert("The response was : " + response);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setSubscriberStatusChecked(true);
-      });
-  };
+  // const getSubscriberStatus = () => {
+  //   Axios.get("http://localhost:5000/subscriberCheck:rohan@gmail.com")
+  //     .then((response) => {
+  //       console.log(response);
+  //       alert("The response was : " + response);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     })
+  //     .finally(() => {
+  //       setSubscriberStatusChecked(true);
+  //     });
+  // };
 
-  // Check the user status only once when the component mounts
-  useEffect(() => {
-    if (!subscriberStatusChecked) {
-      getSubscriberStatus();
-    }
-  }, [subscriberStatusChecked]);
+  // // Check the subscriber status only once when the component mounts
+  // useEffect(() => {
+  //   if (!subscriberStatusChecked) {
+  //     getSubscriberStatus();
+  //   }
+  // }, [subscriberStatusChecked]);
 
   return (
     <>
-      {user ? <div>SignIn</div> : null}
-      {/* Render other content based on user state */}
+      {!subscriber ? <React.Suspense fallback={<p>Loading Page ...</p>}>
+        <SignIn setSubscriber={setSubscriber}/>
+      </React.Suspense> : 
+        <Home/>
+      /*<React.Suspense fallback={<p>Loading Page ...</p>}>
+        <Home/>
+      </React.Suspense>*/}
     </>
   );
 };
