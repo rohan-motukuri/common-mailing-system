@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d85575ee-b02b-4bc7-99ae-ca948736fa96/deploy-status)](https://app.netlify.com/sites/common-mail/deploys)
+
 # Common Mailing Interface
 
 # Problem Statement
