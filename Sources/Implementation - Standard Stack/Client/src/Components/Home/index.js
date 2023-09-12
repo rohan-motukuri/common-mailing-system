@@ -1,15 +1,15 @@
 import React from 'react'
-import { useState, useCallback, useEffect } from 'react'
-import axios from 'axios'
 
-import SideBar from '../SideBar'
 import Navbar from '../Navbar'
+import Display from '../Display'
 
-function Home({ subscriber, setSubscriber }) {
+
+function Home({ subscriber, setSubscriber, inMobile }) {
+    console.log("Rendering Home");
 
     return (<>
         <Navbar subscriber={subscriber} setSubscriber={setSubscriber}/>
-        <SideBar subscriber={subscriber}/>  ListingPage Inside
+        <Display subscriber={subscriber} inMobile = {inMobile}/>
     </>)
 }
 

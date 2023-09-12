@@ -1,10 +1,7 @@
 import "../../Css/SignIn.css";
 
-const LogIn = () => {
-
-}
-
-function SignIn ({ setSubscriber }) {
+function SignIn ({ setSubscriber, subscriberConstructor }) {
+    console.log("Rendering SignIn");
     return(<>
         <div className='signin_background_card'>
             <div className='signin_logo'>
@@ -12,7 +9,7 @@ function SignIn ({ setSubscriber }) {
             </div>
 
             <div className='signin_enter'>
-                <button className='button' onClick={()=>setSubscriber("test@test.com")}>Enter In</button>
+                <button className='button' onClick={()=>setSubscriber(subscriberConstructor(true, "test@test.com"))}>Enter In</button>
             </div>
 
             <div className='signin_login'>
