@@ -8,8 +8,8 @@ function Home({ subscriber, setSubscriber, inMobile }) {
     console.log("Rendering Home");
 
     return (<>
-        <Navbar subscriber={subscriber} setSubscriber={setSubscriber}/>
-        <Display subscriber={subscriber} inMobile = {inMobile}/>
+        <Navbar subscriber={subscriber} setSubscriber={setSubscriber} inMobile={inMobile}/>
+        <Display subscriber={subscriber} inMobile ={inMobile}/>
     </>)
 }
 

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import React from "react";
 
 import Home from "./Components/Home";
@@ -23,7 +23,7 @@ function App () {
     <>
       {!subscriber.initiated ? (
         <React.Suspense fallback={<p>Loading Page ...</p>}>
-          <SignIn setSubscriber={setSubscriber} subscriberConstructor = {subscriberConstructor}/>
+          <SignIn setSubscriber={setSubscriber} subscriberConstructor={subscriberConstructor}/>
         </React.Suspense>) 
         : 
         <Home subscriber={subscriber} setSubscriber={setSubscriber} inMobile={inMobile}/>

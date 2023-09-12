@@ -1,4 +1,4 @@
-import "../../Css/SignIn.css";
+import "../../CSS/SignIn.css";
 
 function SignIn ({ setSubscriber, subscriberConstructor }) {
     console.log("Rendering SignIn");
