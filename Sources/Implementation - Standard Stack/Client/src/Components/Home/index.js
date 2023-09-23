@@ -1,15 +1,13 @@
-import React from 'react'
-
 import Navbar from '../Navbar'
-import Display from '../Display'
+import Active_Display from '../Active_Display'
 
 
-function Home({ subscriber, setSubscriber, inMobile }) {
-    console.log("Rendering Home");
-
+function Home({ subscriber, setSubscriber, inMobile, subscriberConstructor }) {
+    console.log("Dev-Status: Rendering Home");
+    
     return (<>
-        <Navbar subscriber={subscriber} setSubscriber={setSubscriber} inMobile={inMobile}/>
-        <Display subscriber={subscriber} inMobile ={inMobile}/>
+        <Navbar subscriber={subscriber} setSubscriber={setSubscriber} inMobile={inMobile} subscriberConstructor={subscriberConstructor}/>
+        <Active_Display subscriber={subscriber} inMobile ={inMobile}/>
     </>)
 }
 

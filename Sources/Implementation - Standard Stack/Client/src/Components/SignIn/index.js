@@ -1,7 +1,13 @@
 import "../../CSS/SignIn.css";
 
 function SignIn ({ setSubscriber, subscriberConstructor }) {
-    console.log("Rendering SignIn");
+    console.log("Dev-Status: Rendering SignIn");
+
+    const handleLogin = (address) => {
+        setSubscriber(subscriberConstructor(true, address))
+        localStorage.setItem('subscriberID', address)
+    }
+
     return(<>
         <div className='signin_background_card'>
             <div className='signin_logo'>
@@ -9,7 +15,7 @@ function SignIn ({ setSubscriber, subscriberConstructor }) {
             </div>
 
             <div className='signin_enter'>
-                <button className='button' onClick={()=>setSubscriber(subscriberConstructor(true, "test@test.com"))}>Enter In</button>
+                <button className='button' onClick={()=>handleLogin("test@test.com")}>Enter In</button>
             </div>
 
             <div className='signin_login'>

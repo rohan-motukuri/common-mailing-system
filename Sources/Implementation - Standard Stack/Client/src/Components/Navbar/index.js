@@ -3,7 +3,14 @@ import { Avatar } from '@mui/material'
 
 import "../../CSS/Navbar.css"
 
-function Navbar({ subscriber, setSubscriber, inMobile }) {
+function Navbar({ subscriber, setSubscriber, inMobile, subscriberConstructor }) {
+    console.log("Dev-Status: Rendering Navbar");
+
+    const tempLogOut = () => {
+        setSubscriber(subscriberConstructor(false));
+        localStorage.removeItem('subscriberID');
+    }
+
     return (<>
         {inMobile ? null : (<div className='NavBar_Logo'>
             <img src={""} alt = "Logo"/>
@@ -14,7 +21,7 @@ function Navbar({ subscriber, setSubscriber, inMobile }) {
                     <div className='NavBar_Searcher_Input'><input type='text'/></div>
                 </div>
             </div>
-            <div className='NavBar_Profile'>
+            <div className='NavBar_Profile' onClick={tempLogOut}>
                 <Avatar src={subscriber.profile_pic} sx={{ width: "40px", height: "40px", bgcolor: "pink"}}/>
             </div>
         </div>

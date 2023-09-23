@@ -5,19 +5,25 @@ import Home from "./Components/Home";
 const SignIn = React.lazy(() => import("./Components/SignIn"));
 // const Home = React.lazy(() => import("./Components/Home"));
 
-function App () {
-  console.log("Rendering App");
-
-  const subscriberConstructor = (initiated = false, address = "", profile_pic = "") => {
-    return {
-      address : address,
-      profile_pic : profile_pic,
-      initiated : initiated
-    }
+const checkForPreviousLogin = () => {
+  if(localStorage.getItem('subscriberID') != null) {
+    return subscriberConstructor(true, localStorage.getItem('subscriberID'));
   }
+  return subscriberConstructor();
+} 
 
-  const [subscriber, setSubscriber] = useState(subscriberConstructor());
-  const [inMobile, setInMobile] = useState(false);
+const subscriberConstructor = (initiated = false, address = "", profile_pic = "") => {
+  return {
+    address : address,
+    profile_pic : profile_pic,
+    initiated : initiated
+  }
+}
+
+function App () {
+  console.log("Dev-Status: Rendering App");
+  
+  const [subscriber, setSubscriber] = useState(checkForPreviousLogin);
 
   return (
     <>
@@ -26,7 +32,7 @@ function App () {
           <SignIn setSubscriber={setSubscriber} subscriberConstructor={subscriberConstructor}/>
         </React.Suspense>) 
         : 
-        <Home subscriber={subscriber} setSubscriber={setSubscriber} inMobile={inMobile}/>
+        <Home subscriber={subscriber} setSubscriber={setSubscriber} subscriberConstructor={subscriberConstructor}/>
       }
     </>
   );

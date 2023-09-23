@@ -1,5 +1,5 @@
-import { useEffect, useState, useContext, memo } from 'react'
-import { SideDownBarContext } from '../Display';
+import { useContext, memo } from 'react'
+import { SideDownBarContext } from '../Active_Display';
 
 import StarTwoToneIcon from '@mui/icons-material/StarTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
@@ -8,12 +8,14 @@ import InboxTwoToneIcon from '@mui/icons-material/InboxTwoTone';
 
 import '../../CSS/Sidebar.css'
 
-function SideBar({ subscriber, inMobile }) {
+function SideBar({ inMobile }) {
+    console.log("Dev-Status: Rendering Sidebar");
 
-    const SideBarContexter = useContext(SideDownBarContext);
+    const SideBarContexter      = useContext(SideDownBarContext);
+    const mode                  = SideBarContexter.mode;
+    const selectedSubscription  = SideBarContexter.selectedSubscription;
+    const subscriptionList      = SideBarContexter.subscriptionList;
 
-    const mode = SideBarContexter.mode;
-    const selectedSubscription= SideBarContexter.selectedSubscription;
     const setMode_Wrapper = (mode = 'list') => {
         SideBarContexter.setMode(mode);
     }
@@ -24,7 +26,7 @@ function SideBar({ subscriber, inMobile }) {
                 if(mode_set == 'mail') {
 
                 }
-            }else SideBarContexter.setSelectedSubscription(subscription_set);
+            } else SideBarContexter.setSelectedSubscription(subscription_set);
         }
 
         if(mode_set == 'mail') {
@@ -33,8 +35,7 @@ function SideBar({ subscriber, inMobile }) {
 
         if(mode != mode_set) setMode_Wrapper(mode_set);
     }
-    const subscriptionList = SideBarContexter.subscriptionList;
-
+    
     // Define UI Components
     // Dependencies <Consumption Relation>
     // |- subscriptionList < as a map
