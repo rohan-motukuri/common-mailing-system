@@ -1,11 +1,9 @@
-import { createContext, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { db } from '../Firebase'
 
 import InMobile from "../InMobile";
 import SideBar from '../SideBar';
 import Passive_Display from '../Passive_Display';
-
-export const SideDownBarContext = createContext();
 
 function Active_Display({ subscriber }) {
     console.log("Dev-Status: Rendering Active Display");
@@ -39,11 +37,21 @@ function Active_Display({ subscriber }) {
     }, [])
 
     return (<>
-        <SideDownBarContext.Provider value={{subscriptionList, selectedSubscription, setSelectedSubscription, mode, setMode}}>
-            <SideBar inMobile={inMobile} setChangeModeTo={setChangeModeTo} selectedMultipleBodies={selectedMultipleBodies}/>
-        </SideDownBarContext.Provider>
+        <SideBar    subscriptionList={subscriptionList} 
+                    selectedSubscription={selectedSubscription} 
+                    setSelectedSubscription={setSelectedSubscription} 
+                    mode={mode} setMode={setMode} 
+                    inMobile={inMobile} 
+                    setChangeModeTo={setChangeModeTo} 
+                    selectedMultipleBodies={selectedMultipleBodies}/>
 
-        <Passive_Display mode={mode} subscriber={subscriber} bodiesList = {bodiesList} changeModeTo={changeModeTo} setSelectedMultipleBodies={setSelectedMultipleBodies}/>
+        <Passive_Display    mode={mode} 
+                            setMode={setMode}
+                            subscriber={subscriber} 
+                            selectedSubscription={subscriptionList[selectedSubscription]} 
+                            bodiesList = {bodiesList} 
+                            changeModeTo={changeModeTo} 
+                            setSelectedMultipleBodies={setSelectedMultipleBodies}/>
     </>)
 }
 

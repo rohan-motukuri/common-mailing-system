@@ -1,5 +1,4 @@
-import { useContext, memo } from 'react'
-import { SideDownBarContext } from '../Active_Display';
+import { memo } from 'react'
 
 import StarTwoToneIcon from '@mui/icons-material/StarTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
@@ -8,16 +7,11 @@ import InboxTwoToneIcon from '@mui/icons-material/InboxTwoTone';
 
 import '../../CSS/Sidebar.css'
 
-function SideBar({ inMobile }) {
+function SideBar({ inMobile, setMode, mode, subscriptionList, selectedSubscription, setSelectedSubscription }) {
     console.log("Dev-Status: Rendering Sidebar");
 
-    const SideBarContexter      = useContext(SideDownBarContext);
-    const mode                  = SideBarContexter.mode;
-    const selectedSubscription  = SideBarContexter.selectedSubscription;
-    const subscriptionList      = SideBarContexter.subscriptionList;
-
     const setMode_Wrapper = (mode = 'list') => {
-        SideBarContexter.setMode(mode);
+        setMode(mode);
     }
     const setSelectedSubscription_Wrapper = (mode_set = 'list', subscription_set) => {
         if(mode_set == 'list') {
@@ -26,7 +20,9 @@ function SideBar({ inMobile }) {
                 if(mode_set == 'mail') {
 
                 }
-            } else SideBarContexter.setSelectedSubscription(subscription_set);
+            } 
+            else if(selectedSubscription != subscription_set) // Added this condition to hotfix the bug where active display was re-rendering everytime the selected mail was being pressed on again
+                setSelectedSubscription(subscription_set);
         }
 
         if(mode_set == 'mail') {
@@ -63,7 +59,7 @@ function SideBar({ inMobile }) {
                 }
                 {
                     inMobile ? (null) : subscriptionList.map((subscriber, index) => 
-                    <li className={'SideBar_List ' + (mode == "list" && index == selectedSubscription ? 'List-Selected ' : '')} key={subscriber + "_sidebarlement"} onClick={()=> setSelectedSubscription_Wrapper('list', index)}> 
+                    <li className={'SideBar_List ' + (mode == "list" && index == selectedSubscription ? 'List-Selected ' : '')} key={subscriber + "_sidebarelement"} onClick={() => setSelectedSubscription_Wrapper('list', index)}> 
                         <InboxTwoToneIcon/> <p className='list_text'>{subscriber}</p>
                     </li>)
                 }
@@ -73,4 +69,4 @@ function SideBar({ inMobile }) {
 
 }
 
-export default memo(SideBar)
+export default SideBar
