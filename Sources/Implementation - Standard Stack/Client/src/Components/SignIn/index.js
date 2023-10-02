@@ -1,4 +1,5 @@
 import "../../CSS/SignIn.css";
+import logo from "../../Assets/Logo.png"
 
 function SignIn ({ setSubscriber, subscriberConstructor }) {
     console.log("Dev-Status: Rendering SignIn");
@@ -11,7 +12,7 @@ function SignIn ({ setSubscriber, subscriberConstructor }) {
     return(<>
         <div className='signin_background_card'>
             <div className='signin_logo'>
-                <img src='' alt='Logo'/>
+                <img src={logo} alt='Logo'/>
             </div>
 
             <div className='signin_enter'>

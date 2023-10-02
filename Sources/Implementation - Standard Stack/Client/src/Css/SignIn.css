@@ -26,6 +26,10 @@
     justify-content: space-around;
 }
 
+    .signin_logo img {
+        height: 300px;
+    }
+
 .signin_enter .button {
     margin-bottom: 30px;
     padding: 20px 40px;

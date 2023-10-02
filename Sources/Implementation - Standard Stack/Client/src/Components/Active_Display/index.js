@@ -51,7 +51,8 @@ function Active_Display({ subscriber }) {
                             selectedSubscription={subscriptionList[selectedSubscription]} 
                             bodiesList = {bodiesList} 
                             changeModeTo={changeModeTo} 
-                            setSelectedMultipleBodies={setSelectedMultipleBodies}/>
+                            setSelectedMultipleBodies={setSelectedMultipleBodies}
+                            subscriptionList={subscriptionList}/>
     </>)
 }
 

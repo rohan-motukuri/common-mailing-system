@@ -38,7 +38,7 @@ const threadHandler = () => {
     }
 }
 
-function Passive_Display({selectedSubscription, subscriber, mode, setMode}) {
+function Passive_Display({selectedSubscription, subscriber, mode, setMode, subscriptionList}) {
     console.log("Dev-Status: Rendering Passive Display");
 
     const [starredSet, setStarredSet] = useState(() => new Set());
@@ -60,7 +60,7 @@ function Passive_Display({selectedSubscription, subscriber, mode, setMode}) {
         console.log('Dev-Status: Setting Sets @ Passive Display');
 
         db.doc(`Subscribers/${subscriber.address}`).get().then(x => {
-            const data = x.data().threadModifiers;
+            const data = x.data();
 
             setStarredSet(new Set (data.starred));
             setTrashedSet(new Set (data.trashed));
@@ -69,7 +69,7 @@ function Passive_Display({selectedSubscription, subscriber, mode, setMode}) {
     
     return (
         <div className='MailingsMain'>
-            {mode == "mail" ? <MailPage/> : <MailList selectedSubscription={selectedSubscription} mode={mode} setMode={setMode}/>}
+            {mode == "mail" ? <MailPage/> : <MailList subscriber={subscriber} subscriptionList={subscriptionList} selectedSubscription={selectedSubscription} mode={mode} setMode={setMode}/>}
         </div>
     )
 }

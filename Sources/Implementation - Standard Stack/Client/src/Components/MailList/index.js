@@ -2,80 +2,131 @@ import { useState, useEffect, useRef } from 'react'
 import { db } from '../Firebase';
 
 class Listed_Mail_Item {
-    constructor (data) {
+    constructor (data, ref) {
+        this._refPath = ref;
+
         this.data = data;
-        this.isStarred = false;
-        this.isTrashed = false;
     }
 
     toggleStar () {
-
+        db.doc().update(/*{starred : {...starred, {this.data.threadID : ...x, }}}*/);
     }
 
     toggleTrash () {
-        
+        db.doc().update();
     }
 
-    onClick ({setMode}) {
+    onClick ({setMode, setSelectedThread}) {
         setMode("mail");
+        setSelectedThread(this.data.threadID);
     }
 }
 
-function MailList({ selectedSubscription, mode, setMode }) {
-    const [threadsTracker, setThreadsTracker] = useState(()=> new Object ());
+function MailList({ subscriber, selectedSubscription, mode, setMode, subscriptionList, setSelectedThread }) {
+    const [threadsTracker, setThreadsTracker] = useState({});
+    const [internalState_trigSnap, setIntenalState_trigSnap] = useState(() => false);
+
+    const handleListRendering = (list_accessor) => {
+        if(threadsTracker[list_accessor])
+            return Object.keys(threadsTracker[list_accessor]).map(thread => <div className='mail_item' key={"mailList" + list_accessor + thread}> {threadsTracker[list_accessor][thread].data.threadID} </div>);
+        
+        return null;
+    }
 
     useEffect(() => {
-        console.log('Dev-Status: Snapping Threads @ Passive Display');
-        
-        if (mode == "list") { // Requires Optimization
-            const unsubscribe = db.collection(`Subscriptions/${selectedSubscription}/threads`).onSnapshot(snap => {
-                snap.docs.forEach(thread => {
-                    const data = thread.data();
-                    let workingObj = {...threadsTracker};
-    
-                    if(threadsTracker[selectedSubscription]) {
-                        if(threadsTracker[selectedSubscription][data.threadID]) {
-                            workingObj[selectedSubscription][data.threadID].data = data;
-                        } else {
-                            workingObj[selectedSubscription][data.threadID] = new Listed_Mail_Item(data);
-                        }
+        setThreadsTracker(subscriptionList.reduce((a, v) => ({ ...a, [v]: {}}), {}));
+        setIntenalState_trigSnap(!internalState_trigSnap);
+    }, [subscriptionList])
+
+    useEffect(() => {
+        console.log("Dev-Status: Snapping Threads @ Passive Display");
+
+        const unsubscribe = db.collection(`Threads`).onSnapshot(snap => {
+            console.log("Dev-Status: In Snapshot @ Passive Display");
+            let workingObj = {...threadsTracker};
+            snap.docChanges().forEach(thread => {
+                const threadParser = JSON.parse(thread.doc.id);
+                const threadID     = threadParser.thread;
+                const address      = threadParser.address;
+
+                if(workingObj[address]) {
+                    // workingObj[address].push();
+                    if(!workingObj[address][threadID]) {
+                        workingObj[address][threadID] = new Listed_Mail_Item(thread.doc.data(), thread.doc.ref);
                     } else {
-                        workingObj[selectedSubscription] = {};
-                        workingObj[selectedSubscription][data.threadID] = new Listed_Mail_Item(data);
-                    }
-    
-                    setThreadsTracker(workingObj);
-    
-                });
-                // console.log("Dev-Debug: Threads: " + snap.docChanges()[0]?.doc?.data()); 
+                        workingObj[address][threadID] = new Listed_Mail_Item(thread.doc.data(), thread.doc.ref);
+                    }   
+                }
             });
-    
-            return () => {
-                console.log('Dev-Status: Unsubscribing from previous Firestore listener @ Passive Display');
-                unsubscribe(); 
-            };
-        } 
 
-        if (mode == "star") { // Requires Optimization?
+            setThreadsTracker(workingObj);
+        })
 
+        return () => {
+            unsubscribe();
         }
+    }, [internalState_trigSnap]);
 
-        if(mode == "trash") {
+    // useEffect(() => {
+    //     console.log('Dev-Status: Snapping Threads @ Passive Display ');
 
-        }
+    //     let unsubscribe = ()=>{};
+        
+    //     if (mode === "list") { // Requires Optimization
+    //         unsubscribe = db.collection(`Subscriptions/${selectedSubscription}/threads`).onSnapshot(snap => {
+    //             let workingObj = {...threadsTracker};
+    //             snap.docs.forEach(thread => {
+    //                 const data = thread.data();
+    //                 const ref = thread.ref.path;
 
-    }, [selectedSubscription, mode]);    
+    //                 if(workingObj[selectedSubscription]) {
+    //                     if(workingObj[selectedSubscription][data.threadID]) {
+    //                         workingObj[selectedSubscription][data.threadID].data = data;
+    //                     } else {
+    //                         workingObj[selectedSubscription][data.threadID] = new Listed_Mail_Item(data, ref);
+    //                     }
+    //                 } else {
+    //                     workingObj[selectedSubscription] = {};
+    //                     workingObj[selectedSubscription][data.threadID] = new Listed_Mail_Item(data, ref);
+    //                 }
+
+    //             });  
+    //             setThreadsTracker(workingObj);
+    //         });
+    //     } 
+
+    //     if (mode === "star") { // Requires Optimization?
+    //         unsubscribe = db.collection(`Subscribers/${subscriber}/starred`).onSnapshot(snap => {
+    //             const data = snap.docChanges().forEach(ref => {
+
+    //             })
+    //         });
+    //     }
+
+    //     if(mode === "trash") {
+    //         unsubscribe = db.collection(`Subscribers/${subscriber}/trashed`).onSnapshot(snap => {
+    //             const data = snap.docChanges().forEach(ref => {
+    //                 ref.doc.data();
+    //             });
+    //         });
+    //     }
+
+    //     return () => {
+    //         console.log("Dev-Status: Cleaning Previous Firebase Listener @ Passive Display");
+    //         unsubscribe();
+    //      }
+    // }, [selectedSubscription, mode]);    
 
     return (<>
         {
-            mode == "list" ? (
-                threadsTracker[selectedSubscription] ? Object.keys(threadsTracker[selectedSubscription]).map(thread => <div className='mail_item'> {threadsTracker[selectedSubscription][thread].data.threadID} </div>) : null
+            mode === "list" ? (
+                handleListRendering(selectedSubscription)
             ) : 
-            mode == "star" ? (
-                threadsTracker['starred'] ? Object.keys(threadsTracker['starred']).map(thread => <div className='mail_item'> {threadsTracker['starred'][thread].data.threadID} </div>) : null
+            mode === "star" ? (
+                handleListRendering("starred")
             ) : 
-            mode == "trash" ? (
-                threadsTracker['trashed'] ? Object.keys(threadsTracker['trashed']).map(thread => <div className='mail_item'> {threadsTracker['trashed'][thread].data.threadID} </div>) : null
+            mode === "trash" ? (
+                handleListRendering("trashed")
             ) : null
         }
     </>)

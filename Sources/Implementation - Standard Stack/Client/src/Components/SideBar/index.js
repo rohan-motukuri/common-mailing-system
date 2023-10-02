@@ -46,11 +46,11 @@ function SideBar({ inMobile, setMode, mode, subscriptionList, selectedSubscripti
                 {
                     inMobile ? (<li className={'SideBar_List '+ (mode == "list" || mode == "mail" ? 'List-Selected ' : '')} onClick={()=> setSelectedSubscription_Wrapper('list')}><InboxTwoToneIcon/></li>) : (null)
                 }
-                <li className={'SideBar_List ' + (mode == 'trash' ? 'List-Selected ' : '')} onClick={()=> setSelectedSubscription_Wrapper('trash')}>
+                <li style={{ userSelect: "none" }} className={'SideBar_List ' + (mode == 'trash' ? 'List-Selected ' : '')} onClick={()=> setSelectedSubscription_Wrapper('trash')}>
                     <DeleteTwoToneIcon/> 
                     {inMobile ? null : <p className='list_text'>Deleted Mails</p> }
                 </li>
-                <li className= {'SideBar_List ' + (mode == "star" ? 'List-Selected ' : '')} onClick={()=> setSelectedSubscription_Wrapper('star')}>
+                <li style={{ userSelect: "none" }} className= {'SideBar_List ' + (mode == "star" ? 'List-Selected ' : '')} onClick={()=> setSelectedSubscription_Wrapper('star')}>
                     <StarTwoToneIcon/>  
                     {inMobile ? null : <p className='list_text'>Starred Mails</p> }
                 </li>
@@ -59,7 +59,7 @@ function SideBar({ inMobile, setMode, mode, subscriptionList, selectedSubscripti
                 }
                 {
                     inMobile ? (null) : subscriptionList.map((subscriber, index) => 
-                    <li className={'SideBar_List ' + (mode == "list" && index == selectedSubscription ? 'List-Selected ' : '')} key={subscriber + "_sidebarelement"} onClick={() => setSelectedSubscription_Wrapper('list', index)}> 
+                    <li className={'SideBar_List ' + (mode == "list" && index == selectedSubscription ? 'List-Selected ' : '')} key={subscriber + "_sidebarelement"} onClick={() => setSelectedSubscription_Wrapper('list', index)} style={{ userSelect: "none" }}> 
                         <InboxTwoToneIcon/> <p className='list_text'>{subscriber}</p>
                     </li>)
                 }
