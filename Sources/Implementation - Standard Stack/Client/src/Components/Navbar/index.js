@@ -3,12 +3,16 @@ import { Avatar } from '@mui/material'
 
 import "../../CSS/Navbar.css"
 
-function Navbar({ subscriber, setSubscriber, inMobile, subscriberConstructor }) {
+function Navbar({ subscriber, setSubscriber, inMobile, subscriberConstructor, setSearchQuery }) {
     console.log("Dev-Status: Rendering Navbar");
 
     const tempLogOut = () => {
         setSubscriber(subscriberConstructor(false));
         localStorage.removeItem('subscriberID');
+    }
+
+    const handleQueryType = (e) => {
+        setSearchQuery(e.target.value);
     }
 
     return (<>
@@ -18,7 +22,11 @@ function Navbar({ subscriber, setSubscriber, inMobile, subscriberConstructor }) 
         <div className='NavBar_Main'>
             <div className='NavBar_Search_Space'>
                 <div className='NavBar_Searcher'>
-                    <div className='NavBar_Searcher_Input'><input type='text'/></div>
+                    <div className='NavBar_Searcher_Input'>
+                        <input id="globalSearchBar" type="text" placeholder='Search in Mail'
+                                onChange={handleQueryType}
+                                autocomplete="off"/>
+                    </div>
                 </div>
             </div>
             <div className='NavBar_Profile' onClick={tempLogOut}>

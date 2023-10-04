@@ -59,7 +59,7 @@ function SideBar({ inMobile, setMode, mode, subscriptionList, selectedSubscripti
                 }
                 {
                     inMobile ? (null) : subscriptionList.map((subscriber, index) => 
-                    <li className={'SideBar_List ' + (mode == "list" && index == selectedSubscription ? 'List-Selected ' : '')} key={subscriber + "_sidebarelement"} onClick={() => setSelectedSubscription_Wrapper('list', index)} style={{ userSelect: "none" }}> 
+                    <li className={'SideBar_List ' + ((mode === "list" || mode === "mail") && index == selectedSubscription ? 'List-Selected ' : '')} key={subscriber + "_sidebarelement"} onClick={() => setSelectedSubscription_Wrapper('list', index)} style={{ userSelect: "none" }}> 
                         <InboxTwoToneIcon/> <p className='list_text'>{subscriber}</p>
                     </li>)
                 }

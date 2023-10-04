@@ -5,11 +5,11 @@ import InMobile from "../InMobile";
 import SideBar from '../SideBar';
 import Passive_Display from '../Passive_Display';
 
-function Active_Display({ subscriber }) {
+function Active_Display({ subscriber, searchQuery, inSearchMode, setInSearchMode }) {
     console.log("Dev-Status: Rendering Active Display");
 
     const [selectedSubscription, setSelectedSubscription] = useState(0);
-    const [mode, setMode] = useState("list"); // star, trash, list, mail
+    const [mode, setMode] = useState("list"); // star, trash, list, mail, search
     const [selectedMultipleBodies, setSelectedMultipleBodies] = useState(false);
     const [changeModeTo, setChangeModeTo] = useState('');
     const [subscriptionList, setSubscriptionList] = useState([]);
@@ -52,7 +52,8 @@ function Active_Display({ subscriber }) {
                             bodiesList = {bodiesList} 
                             changeModeTo={changeModeTo} 
                             setSelectedMultipleBodies={setSelectedMultipleBodies}
-                            subscriptionList={subscriptionList}/>
+                            subscriptionList={subscriptionList}
+                            searchQuery={searchQuery}/>
     </>)
 }
 
