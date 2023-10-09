@@ -1,4 +1,4 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/d85575ee-b02b-4bc7-99ae-ca948736fa96/deploy-status)](https://app.netlify.com/sites/common-mail/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d85575ee-b02b-4bc7-99ae-ca948736fa96/deploy-status)](https://app.netlify.com/sites/common-mail/deploys) [![](https://img.shields.io/badge/google%20apps%20script-v8-%234285f4)](https://developers.google.com/apps-script/guides/v8-runtime)
 
 # Common Mailing Interface
 
