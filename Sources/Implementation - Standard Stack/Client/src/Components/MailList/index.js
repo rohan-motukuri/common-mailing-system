@@ -58,7 +58,7 @@ class Mail_Item_Structure {
     }
 }
 
-function MailList({ subscriber, selectedSubscription, mode, setMode, subscriptionList, setSelectedThread, searchQuery }) {
+function MailList({ subscriber, selectedSubscription, mode, setMode, subscriptionList, setSelectedThread, searchQuery, setIsOffline }) {
     subscriberAddress = subscriber.address;
 
     const [threadsTracker, setThreadsTracker] = useState({});
@@ -69,7 +69,9 @@ function MailList({ subscriber, selectedSubscription, mode, setMode, subscriptio
     useEffect(() => {
         console.log("Dev-Status: Snapping Starred @ Passive Display");
         const unsubscribe = db.doc(`Subscribers/${subscriber.address}/Starred/main`).onSnapshot(snap => {
-            const listOfStarred = snap.data().main;
+            const listOfStarred = snap.data()?.main;
+
+            if(listOfStarred == null) return;
 
             setStarredList(listOfStarred);
         });
@@ -82,7 +84,9 @@ function MailList({ subscriber, selectedSubscription, mode, setMode, subscriptio
     useEffect(() => {
         console.log("Dev-Status: Snapping Trashed @ Passive Display");
         const unsubscribe = db.doc(`Subscribers/${subscriber.address}/Trashed/main`).onSnapshot(snap => {
-            const listOfTrashed = snap.data().main;
+            const listOfTrashed = snap.data()?.main;
+
+            if(listOfTrashed == null) return;
 
             setTrashedList(listOfTrashed);
         });
@@ -122,7 +126,10 @@ function MailList({ subscriber, selectedSubscription, mode, setMode, subscriptio
     }, [internalState_trigSnap]);
 
     useEffect(() => {
-        setMode("search")
+        if(searchQuery.length)
+            setMode("search");
+        else 
+            setMode("list");
     }, [searchQuery])
 
     // useEffect(() => {
@@ -185,6 +192,7 @@ function MailList({ subscriber, selectedSubscription, mode, setMode, subscriptio
                       attachments = currentThread.latestAttachments
 
                 return <Mail_Item 
+                        key={`search_${thread}_${list_accessor}`}
                         sender      = {sender} 
                         recieved    = {recieved} 
                         subject     = {subject} 
@@ -195,6 +203,10 @@ function MailList({ subscriber, selectedSubscription, mode, setMode, subscriptio
         return null;
     }
     const handleSearchForQuery = (query = "") => {
+        if(!query.length) return null;
+
+        let lGlobalDecider = true;
+
         const matchedSubsetsAsHTMl = (baseText = "", searchString = query) => {
             let returningSubset = [];
             let lastPosition = 0;
@@ -202,35 +214,42 @@ function MailList({ subscriber, selectedSubscription, mode, setMode, subscriptio
             
             while ((hitIndex = baseText.indexOf(searchString, lastPosition)) >= 0) {
                 returningSubset.push(baseText.substring(lastPosition, hitIndex));
-                returningSubset.push(<i>
+                returningSubset.push(<mark>
                     {searchString}
-                </i>)
+                </mark>)
 
                 lastPosition = hitIndex + searchString.length;
             }
 
+            if(returningSubset.length == 0) {
+                lGlobalDecider = lGlobalDecider && true;
+                return baseText;
+            }
+            lGlobalDecider = lGlobalDecider && false;
+            returningSubset.push(baseText.substring(lastPosition));
             return returningSubset;
         }
         return Object.keys(threadsTracker[selectedSubscription]).map(thread => {
             const currentThread = threadsTracker[selectedSubscription][thread];
+
             const sender      = matchedSubsetsAsHTMl(currentThread.latestSender, query),
                   recieved    = matchedSubsetsAsHTMl(currentThread.latestRecieved, query),
                   subject     = matchedSubsetsAsHTMl(currentThread.latestSubject, query),
-                  attachments = matchedSubsetsAsHTMl(currentThread.latestAttachments, query)
-            
-            // currentThreadSchema
-            // latestSubject     : String
-            // latestRecieved    : Date
-            // latestSender      : String // Email Address
-            // latestAttachments : Array(String) // Array of Attachment File Names
+                  attachments = currentThread.latestAttachments;
 
+            if(lGlobalDecider) {
+                return null;
+            }
             
+            lGlobalDecider = true;
             return <Mail_Item 
+                    key         = {"mail_items_on_query " + sender + subject}
                     sender      = {sender} 
                     recieved    = {recieved} 
                     subject     = {subject} 
                     attachments = {attachments}/>
-        })
+
+        }).filter(x => x);
     }
 
     return (<div className='Mail_List_Parent'>

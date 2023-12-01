@@ -44,7 +44,7 @@ function SideBar({ inMobile, setMode, mode, subscriptionList, selectedSubscripti
         <div className='SideBar_Main'>
             <ul>
                 {
-                    inMobile ? (<li className={'SideBar_List '+ (mode == "list" || mode == "mail" ? 'List-Selected ' : '')} onClick={()=> setSelectedSubscription_Wrapper('list')}><InboxTwoToneIcon/></li>) : (null)
+                    inMobile ? (<li className={'SideBar_List '+ (mode == "list" || mode == "mail" || mode == "search" ? 'List-Selected ' : '')} onClick={()=> setSelectedSubscription_Wrapper('list')}><InboxTwoToneIcon/></li>) : (null)
                 }
                 <li style={{ userSelect: "none" }} className={'SideBar_List ' + (mode == 'trash' ? 'List-Selected ' : '')} onClick={()=> setSelectedSubscription_Wrapper('trash')}>
                     <DeleteTwoToneIcon/> 
@@ -59,7 +59,7 @@ function SideBar({ inMobile, setMode, mode, subscriptionList, selectedSubscripti
                 }
                 {
                     inMobile ? (null) : subscriptionList.map((subscriber, index) => 
-                    <li className={'SideBar_List ' + ((mode === "list" || mode === "mail") && index == selectedSubscription ? 'List-Selected ' : '')} key={subscriber + "_sidebarelement"} onClick={() => setSelectedSubscription_Wrapper('list', index)} style={{ userSelect: "none" }}> 
+                    <li className={'SideBar_List ' + ((mode === "list" || mode === "mail" || mode =="search") && index == selectedSubscription ? 'List-Selected ' : '')} key={subscriber + "_sidebarelement"} onClick={() => setSelectedSubscription_Wrapper('list', index)} style={{ userSelect: "none" }}> 
                         <InboxTwoToneIcon/> <p className='list_text'>{subscriber}</p>
                     </li>)
                 }

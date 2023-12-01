@@ -4,7 +4,7 @@ import "../../CSS/Passive_Display.css";
 import MailList from '../MailList';
 import MailPage from '../MailPage';
 
-function Passive_Display({selectedSubscription, subscriber, mode, setMode, subscriptionList, searchQuery}) {
+function Passive_Display({selectedSubscription, subscriber, mode, setMode, subscriptionList, searchQuery, setIsOffline}) {
     console.log("Dev-Status: Rendering Passive Display");
     const [selectedThread, setSelectedThread] = useState(null);
     
@@ -17,7 +17,13 @@ function Passive_Display({selectedSubscription, subscriber, mode, setMode, subsc
                 mode === "mail" ? 
                     <MailPage selectedThread={selectedThread}/> 
                 : 
-                    <MailList subscriber={subscriber} subscriptionList={subscriptionList} selectedSubscription={selectedSubscription} mode={mode} setMode={setMode} setSelectedThread={setSelectedThread} searchQuery={searchQuery}/>
+                    <MailList subscriber={subscriber} 
+                    subscriptionList={subscriptionList} 
+                    selectedSubscription={selectedSubscription} 
+                    mode={mode} setMode={setMode} 
+                    setSelectedThread={setSelectedThread} 
+                    searchQuery={searchQuery}
+                    setIsOffline={setIsOffline}/>
             }
         </div>
     </div>)

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Avatar } from '@mui/material'
 
 import "../../CSS/Navbar.css"
@@ -12,6 +11,8 @@ function Navbar({ subscriber, setSubscriber, inMobile, subscriberConstructor, se
     }
 
     const handleQueryType = (e) => {
+        if(!e.target.value)
+            setSearchQuery("");
         setSearchQuery(e.target.value);
     }
 
@@ -20,12 +21,12 @@ function Navbar({ subscriber, setSubscriber, inMobile, subscriberConstructor, se
             <img src={""} alt = "Logo"/>
         </div>)}
         <div className='NavBar_Main'>
-            <div className='NavBar_Search_Space'>
+            <div className='NavBar_Search_Space' >
                 <div className='NavBar_Searcher'>
                     <div className='NavBar_Searcher_Input'>
-                        <input id="globalSearchBar" type="text" placeholder='Search in Mail'
+                        <input id="globalSearchBar" type="text"
                                 onChange={handleQueryType}
-                                autocomplete="off"/>
+                                autoComplete="off"/>
                     </div>
                 </div>
             </div>

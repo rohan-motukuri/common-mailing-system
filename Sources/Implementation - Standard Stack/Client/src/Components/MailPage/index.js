@@ -1,13 +1,31 @@
 import { useEffect, useState } from 'react'
 import { db } from '../Firebase'
 
+const Attachments_Constructor = (name, icon) => {
+    return {
+        'name': name,
+        'icon': icon
+    }
+}
+
 class Message_Item {
     constructor (data, ref) {
         this.data = data;
         this._ref = ref;
+
+        this.subject = "";
+        this.sender = {
+            senderAddress: "",
+            senderName: "",
+            senderProfilePic: ""
+        };
+        this.rawContent = "";
+        this.attachments = [];
+
+        this.messageID = "";
+        this.threadID = "";
+        this.subscriptionID = "";
     }
-
-
 }
 
 function MailPage({ selectedThread }) {
@@ -27,7 +45,7 @@ function MailPage({ selectedThread }) {
                     // put in workingObj   
                     ((workingObj[subscriptionID] ??= {})[threadID] ??= []).push(new Message_Item(messageDoc.data(), messageDoc.ref));
                 } else {
-
+                    
                 }
             })
 

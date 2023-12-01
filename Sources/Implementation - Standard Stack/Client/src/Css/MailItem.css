@@ -26,3 +26,7 @@
     width: 100%;
     grid-template-columns: 20% 80%;
 }
+
+.primary_section_data{
+    overflow-x: hidden;
+}

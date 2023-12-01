@@ -2,7 +2,9 @@ import { useState } from "react";
 import React from "react";
 
 import Home from "./Components/Home";
+import ErrorPage from "./Components/ErrorPage";
 const SignIn = React.lazy(() => import("./Components/SignIn"));
+
 // const Home = React.lazy(() => import("./Components/Home"));
 
 const checkForPreviousLogin = () => {
@@ -24,15 +26,17 @@ function App () {
   console.log("Dev-Status: Rendering App");
   
   const [subscriber, setSubscriber] = useState(checkForPreviousLogin);
+  const [isOffline, setIsOffline] = useState(false);
 
   return (
     <>
-      {!subscriber.initiated ? (
+      {
+        !subscriber.initiated ? (
         <React.Suspense fallback={<p>Loading Page ...</p>}>
           <SignIn setSubscriber={setSubscriber} subscriberConstructor={subscriberConstructor}/>
         </React.Suspense>) 
         : 
-        <Home subscriber={subscriber} setSubscriber={setSubscriber} subscriberConstructor={subscriberConstructor}/>
+        <Home subscriber={subscriber} setSubscriber={setSubscriber} subscriberConstructor={subscriberConstructor} setIsOffline={setIsOffline}/>
       }
     </>
   );
